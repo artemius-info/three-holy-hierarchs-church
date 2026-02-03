@@ -96,7 +96,7 @@ const config = config$1({
       label: "Новини",
       slugField: "title",
       path: "src/content/posts/*",
-      format: { contentField: "content" },
+      format: { contentField: "content", extension: "md" },
       schema: {
         title: fields.slug({ name: { label: "Заголовок" } }),
         excerpt: fields.text({
@@ -142,7 +142,7 @@ const config = config$1({
       label: "Розклад богослужінь",
       slugField: "title",
       path: "src/content/events/*",
-      format: { contentField: "description" },
+      format: { contentField: "description", extension: "md" },
       schema: {
         title: fields.slug({ name: { label: "Назва події" } }),
         eventType: fields.select({
@@ -203,7 +203,7 @@ const config = config$1({
       label: "Проповіді",
       slugField: "title",
       path: "src/content/sermons/*",
-      format: { contentField: "content" },
+      format: { contentField: "content", extension: "md" },
       schema: {
         title: fields.slug({ name: { label: "Заголовок проповіді" } }),
         preacher: fields.text({
@@ -236,7 +236,7 @@ const config = config$1({
       label: "Святі покровителі",
       slugField: "name",
       path: "src/content/saints/*",
-      format: { contentField: "biography" },
+      format: { contentField: "biography", extension: "md" },
       schema: {
         name: fields.slug({ name: { label: "Ім'я святого" } }),
         title: fields.text({
@@ -274,7 +274,7 @@ const config = config$1({
     about: singleton({
       label: "Про прихід",
       path: "src/content/about",
-      format: { contentField: "content" },
+      format: { contentField: "content", extension: "md" },
       schema: {
         title: fields.text({ label: "Заголовок" }),
         heroImage: fields.image({
@@ -294,7 +294,7 @@ const config = config$1({
     contacts: singleton({
       label: "Контакти",
       path: "src/content/contacts",
-      format: { contentField: "content" },
+      format: { contentField: "content", extension: "md" },
       schema: {
         title: fields.text({ label: "Заголовок" }),
         address: fields.text({

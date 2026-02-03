@@ -1,7 +1,7 @@
 import React, { createElement } from 'react';
 import ReactDOM from 'react-dom/server';
-import { g as renderJSX, h as createVNode, A as AstroJSX, i as AstroUserError } from './chunks/astro/server_D76GWIxZ.mjs';
-import 'kleur/colors';
+import { n as renderJSX, o as createVNode, p as AstroJSX, q as AstroUserError } from './chunks/astro/server_DdLjyVq9.mjs';
+import 'piccolore';
 import 'clsx';
 
 const contexts = /* @__PURE__ */ new WeakMap();
