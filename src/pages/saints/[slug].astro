@@ -17,14 +17,21 @@ const { saint } = Astro.props;
 // For .mdoc files from Keystatic, we need to handle rendering differently
 let Content;
 let contentBody = '';
+let hasContent = false;
 
 try {
   const rendered = await saint.render();
   Content = rendered.Content;
+  hasContent = true;
 } catch (error) {
   console.error('Error rendering saint content:', error);
-  // Fallback: use raw body if render fails
-  contentBody = saint.body || '';
+  console.log('Saint object keys:', Object.keys(saint));
+  console.log('Saint data:', saint.data);
+  // Fallback: check if body exists
+  if (saint && typeof saint.body === 'string') {
+    contentBody = saint.body;
+    hasContent = true;
+  }
 }
 
 const metadata = {

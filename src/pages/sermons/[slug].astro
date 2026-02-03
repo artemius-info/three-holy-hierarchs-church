@@ -17,13 +17,21 @@ const { sermon } = Astro.props;
 // For .mdoc files from Keystatic, we need to handle rendering differently
 let Content;
 let contentBody = '';
+let hasContent = false;
 
 try {
   const rendered = await sermon.render();
   Content = rendered.Content;
+  hasContent = true;
 } catch (error) {
   console.error('Error rendering sermon content:', error);
-  contentBody = sermon.body || '';
+  console.log('Sermon object keys:', Object.keys(sermon));
+  console.log('Sermon data:', sermon.data);
+  // Fallback: check if body exists
+  if (sermon && typeof sermon.body === 'string') {
+    contentBody = sermon.body;
+    hasContent = true;
+  }
 }
 
 const date = new Date(sermon.data.date);
