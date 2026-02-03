@@ -8,7 +8,12 @@ const metadata = {
   title: 'Святі покровителі',
 };
 
-const saints = await getCollection('saints');
+let saints = [];
+try {
+  saints = await getCollection('saints');
+} catch (error) {
+  console.error('Error loading saints collection:', error);
+}
 ---
 
 <Layout metadata={metadata}>
@@ -47,20 +52,26 @@ const saints = await getCollection('saints');
   </div>
 
   <!-- Святі *************** -->
-  <Features3
-    title="Наші святі покровителі"
-    subtitle="Дізнайтеся більше про життя та вчення кожного зі святителів"
-    columns={3}
-    items={saints.map((saint) => ({
-      title: saint.data.name,
-      description: saint.data.shortDescription || saint.data.title || '',
-      icon: 'tabler:star',
-      callToAction: {
-        text: 'Читати більше',
-        href: `/saints/${saint.id}`,
-      },
-    }))}
-  />
+  {saints.length > 0 ? (
+    <Features3
+      title="Наші святі покровителі"
+      subtitle="Дізнайтеся більше про життя та вчення кожного зі святителів"
+      columns={3}
+      items={saints.map((saint) => ({
+        title: saint.data.name,
+        description: saint.data.shortDescription || saint.data.title || '',
+        icon: 'tabler:star',
+        callToAction: {
+          text: 'Читати більше',
+          href: `/saints/${saint.id}`,
+        },
+      }))}
+    />
+  ) : (
+    <div class="mx-auto max-w-3xl px-4 sm:px-6 py-12 text-center">
+      <p class="text-lg">Інформація про святих завантажується...</p>
+    </div>
+  )}
 
   <!-- Молитва *************** -->
   <div class="mx-auto max-w-3xl px-4 sm:px-6 pb-12 md:pb-16">
