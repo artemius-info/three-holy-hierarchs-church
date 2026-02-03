@@ -18,7 +18,7 @@ import { readingTimeRemarkPlugin, responsiveTablesRehypePlugin, lazyImagesRehype
 import react from '@astrojs/react';
 import markdoc from '@astrojs/markdoc';
 import keystatic from '@keystatic/astro';
-import vercel from '@astrojs/vercel';
+import vercel from '@astrojs/vercel/serverless';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
