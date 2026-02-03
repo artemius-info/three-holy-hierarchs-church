@@ -5,18 +5,27 @@ import { getCollection } from 'astro:content';
 import type { GetStaticPaths } from 'astro';
 
 export const getStaticPaths = (async () => {
-  const saints = await getCollection('saints');
-  return saints.map((saint) => ({
-    params: { slug: saint.id },
-    props: { saint },
-  }));
+  try {
+    const saints = await getCollection('saints');
+    console.log('Saints found:', saints.length);
+    saints.forEach(s => console.log('Saint ID:', s.id, 'Name:', s.data?.name));
+
+    return saints.map((saint) => ({
+      params: { slug: saint.id },
+      props: { saint },
+    }));
+  } catch (error) {
+    console.error('Error in getStaticPaths:', error);
+    return [];
+  }
 }) satisfies GetStaticPaths;
 
 const { saint } = Astro.props;
 
 // Check if saint exists
 if (!saint) {
-  throw new Error('Saint not found');
+  console.error('Saint not found in props');
+  return new Response('Saint not found', { status: 404 });
 }
 
 // For .mdoc files from Keystatic, we need to handle rendering differently
