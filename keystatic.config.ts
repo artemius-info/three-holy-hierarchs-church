@@ -1,10 +1,10 @@
 import { config, collection, fields, singleton } from '@keystatic/core';
 
 export default config({
-  storage: {
-    kind: 'github',
-    repo: 'artemius-info/three-holy-hierarchs-church',
-  },
+  storage:
+    process.env.NODE_ENV === 'production'
+      ? { kind: 'github', repo: 'artemius-info/three-holy-hierarchs-church' }
+      : { kind: 'local' },
 
   collections: {
     posts: collection({
