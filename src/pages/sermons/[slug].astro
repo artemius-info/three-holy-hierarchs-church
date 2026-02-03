@@ -4,6 +4,8 @@ import Hero from '~/components/widgets/Hero.astro';
 import { getCollection } from 'astro:content';
 import type { GetStaticPaths } from 'astro';
 
+export const prerender = true;
+
 export const getStaticPaths = (async () => {
   const sermons = await getCollection('sermons');
   return sermons.map((sermon) => ({
