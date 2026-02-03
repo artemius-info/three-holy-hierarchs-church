@@ -1,63 +1,73 @@
 ---
+// Шрифти з підтримкою кирилиці для православного храму
+// Inter для основного тексту
 import '@fontsource-variable/inter';
-
-// 'DM Sans'
-// Nunito
-// Dosis
-// Outfit
-// Roboto
-// Literata
-// 'IBM Plex Sans'
-// Karla
-// Poppins
-// 'Fira Sans'
-// 'Libre Franklin'
-// Inconsolata
-// Raleway
-// Oswald
-// 'Space Grotesk'
-// Urbanist
+// Playfair Display для заголовків (класичний стиль)
 ---
+
+<!-- Підключення Playfair Display з Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&subset=cyrillic,cyrillic-ext&display=swap" rel="stylesheet">
 
 <style is:inline>
   :root {
-    --aw-font-sans: 'Inter Variable';
-    --aw-font-serif: 'Inter Variable';
-    --aw-font-heading: 'Inter Variable';
+    /* Шрифти */
+    --aw-font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --aw-font-serif: 'Playfair Display', Georgia, serif;
+    --aw-font-heading: 'Playfair Display', Georgia, serif;
 
-    --aw-color-primary: rgb(1 97 239);
-    --aw-color-secondary: rgb(1 84 207);
-    --aw-color-accent: rgb(109 40 217);
+    /* Православна кольорова схема */
+    /* Золотий - символ божественного світла */
+    --aw-color-primary: rgb(234 179 8); /* yellow-500 */
+    --aw-color-secondary: rgb(30 58 95); /* темно-синій - небесний */
+    --aw-color-accent: rgb(139 0 0); /* темно-червоний - літургійний */
 
-    --aw-color-text-heading: rgb(0 0 0);
-    --aw-color-text-default: rgb(16 16 16);
-    --aw-color-text-muted: rgb(16 16 16 / 66%);
+    /* Кольори тексту */
+    --aw-color-text-heading: rgb(17 24 39); /* slate-900 */
+    --aw-color-text-default: rgb(31 41 55); /* gray-800 */
+    --aw-color-text-muted: rgb(107 114 128); /* gray-500 */
     --aw-color-bg-page: rgb(255 255 255);
 
-    --aw-color-bg-page-dark: rgb(3 6 32);
+    --aw-color-bg-page-dark: rgb(15 23 42); /* slate-900 */
 
     ::selection {
-      background-color: lavender;
+      background-color: rgb(234 179 8 / 30%); /* золотистий */
+      color: rgb(17 24 39);
     }
   }
 
   .dark {
-    --aw-font-sans: 'Inter Variable';
-    --aw-font-serif: 'Inter Variable';
-    --aw-font-heading: 'Inter Variable';
+    /* Шрифти для темної теми */
+    --aw-font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --aw-font-serif: 'Playfair Display', Georgia, serif;
+    --aw-font-heading: 'Playfair Display', Georgia, serif;
 
-    --aw-color-primary: rgb(1 97 239);
-    --aw-color-secondary: rgb(1 84 207);
-    --aw-color-accent: rgb(109 40 217);
+    /* Адаптована кольорова схема для темної теми */
+    --aw-color-primary: rgb(250 204 21); /* yellow-400 - світліший золотий */
+    --aw-color-secondary: rgb(59 130 246); /* blue-500 - світліший синій */
+    --aw-color-accent: rgb(220 38 38); /* red-600 - світліший червоний */
 
-    --aw-color-text-heading: rgb(247, 248, 248);
-    --aw-color-text-default: rgb(229 236 246);
-    --aw-color-text-muted: rgb(229 236 246 / 66%);
-    --aw-color-bg-page: rgb(3 6 32);
+    /* Кольори тексту для темної теми */
+    --aw-color-text-heading: rgb(248 250 252); /* slate-50 */
+    --aw-color-text-default: rgb(226 232 240); /* slate-200 */
+    --aw-color-text-muted: rgb(148 163 184); /* slate-400 */
+    --aw-color-bg-page: rgb(15 23 42); /* slate-900 */
 
     ::selection {
-      background-color: black;
-      color: snow;
+      background-color: rgb(250 204 21 / 30%); /* золотистий */
+      color: rgb(248 250 252);
     }
+  }
+
+  /* Додаткові стилі для православної естетики */
+  body {
+    font-feature-settings: 'kern' 1;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    letter-spacing: -0.02em;
   }
 </style>
