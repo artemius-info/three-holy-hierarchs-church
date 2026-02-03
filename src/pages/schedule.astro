@@ -1,0 +1,131 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import Hero from '~/components/widgets/Hero.astro';
+import Features2 from '~/components/widgets/Features2.astro';
+import { getCollection } from 'astro:content';
+
+const metadata = {
+  title: 'Розклад богослужінь',
+};
+
+// Отримуємо події з колекції
+const allEvents = await getCollection('events');
+const activeEvents = allEvents.filter(event => event.data.isActive);
+
+// Сортуємо події: спочатку повторювані (за днем тижня), потім одноразові (за датою)
+const recurringEvents = activeEvents
+  .filter(event => event.data.recurrence.discriminant === 'recurring')
+  .sort((a, b) => {
+    const dayA = parseInt(a.data.recurrence.value.dayOfWeek);
+    const dayB = parseInt(b.data.recurrence.value.dayOfWeek);
+    return dayA - dayB;
+  });
+
+const singleEvents = activeEvents
+  .filter(event => event.data.recurrence.discriminant === 'single')
+  .sort((a, b) => {
+    const dateA = new Date(a.data.recurrence.value.date);
+    const dateB = new Date(b.data.recurrence.value.date);
+    return dateA.getTime() - dateB.getTime();
+  });
+
+const daysOfWeek = ['Неділя', 'Понеділок', 'Вівторок', 'Середа', 'Четвер', "П'ятниця", 'Субота'];
+
+const eventTypeNames: Record<string, string> = {
+  liturgy: 'Літургія',
+  vespers: 'Вечірня',
+  matins: 'Утреня',
+  moleben: 'Молебень',
+  panakhyda: 'Панахида',
+  akathist: 'Акафіст',
+  confession: 'Сповідь',
+};
+
+// Створюємо масив для Features2
+const regularScheduleItems = recurringEvents.map(event => {
+  const recurrence = event.data.recurrence.value;
+  const dayName = daysOfWeek[parseInt(recurrence.dayOfWeek)];
+  const typeName = eventTypeNames[event.data.eventType] || event.data.eventType;
+
+  return {
+    title: `${dayName} - ${event.data.title}`,
+    description: `${typeName} о ${recurrence.time}`,
+    icon: 'tabler:clock',
+  };
+});
+
+const upcomingEventsItems = singleEvents.slice(0, 5).map(event => {
+  const recurrence = event.data.recurrence.value;
+  const date = new Date(recurrence.date);
+  const formattedDate = date.toLocaleDateString('uk-UA', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric'
+  });
+  const typeName = eventTypeNames[event.data.eventType] || event.data.eventType;
+
+  return {
+    title: event.data.title,
+    description: `${typeName} - ${formattedDate} о ${recurrence.time}`,
+    icon: 'tabler:calendar-event',
+  };
+});
+---
+
+<Layout metadata={metadata}>
+  <!-- Hero Widget ******************* -->
+  <Hero>
+    <Fragment slot="title">
+      <span class="text-accent dark:text-white">Розклад</span> богослужінь
+    </Fragment>
+
+    <Fragment slot="subtitle">
+      Запрошуємо всіх на спільну молитву у нашому храмі.
+      <br />
+      Сповідь приймається перед кожним богослужінням.
+    </Fragment>
+  </Hero>
+
+  <!-- Регулярний розклад *************** -->
+  {regularScheduleItems.length > 0 && (
+    <Features2
+      title="Постійний розклад"
+      subtitle="Щотижневі богослужіння"
+      items={regularScheduleItems}
+    />
+  )}
+
+  <!-- Найближчі події *************** -->
+  {upcomingEventsItems.length > 0 && (
+    <Features2
+      title="Найближчі особливі богослужіння"
+      subtitle="Свята та особливі події"
+      items={upcomingEventsItems}
+    />
+  )}
+
+  <!-- Додаткова інформація -->
+  <div class="mx-auto max-w-3xl px-4 sm:px-6 py-12 md:py-16">
+    <div class="bg-blue-50 dark:bg-slate-800 rounded-lg p-6 md:p-8">
+      <h3 class="text-2xl font-bold mb-4">Корисна інформація</h3>
+      <ul class="space-y-3">
+        <li class="flex items-start">
+          <span class="text-accent mr-2">•</span>
+          <span>Сповідь приймається до та під час богослужінь</span>
+        </li>
+        <li class="flex items-start">
+          <span class="text-accent mr-2">•</span>
+          <span>Приходьте за 10-15 хвилин до початку богослужіння</span>
+        </li>
+        <li class="flex items-start">
+          <span class="text-accent mr-2">•</span>
+          <span>Хрещення проводиться за попередньою домовленістю</span>
+        </li>
+        <li class="flex items-start">
+          <span class="text-accent mr-2">•</span>
+          <span>Для замовлення треб звертайтеся до церковної лавки</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</Layout>

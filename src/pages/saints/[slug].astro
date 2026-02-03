@@ -1,0 +1,89 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import Hero from '~/components/widgets/Hero.astro';
+import { getCollection } from 'astro:content';
+import type { GetStaticPaths } from 'astro';
+
+export const getStaticPaths = (async () => {
+  const saints = await getCollection('saints');
+  return saints.map((saint) => ({
+    params: { slug: saint.id },
+    props: { saint },
+  }));
+}) satisfies GetStaticPaths;
+
+const { saint } = Astro.props;
+const { Content } = await saint.render();
+
+const metadata = {
+  title: saint.data.name,
+  description: saint.data.shortDescription,
+};
+---
+
+<Layout metadata={metadata}>
+  <!-- Hero Widget ******************* -->
+  <Hero>
+    <Fragment slot="title">
+      {saint.data.name}
+    </Fragment>
+
+    <Fragment slot="subtitle">
+      {saint.data.title && <span class="block text-xl mb-2">{saint.data.title}</span>}
+      {saint.data.feastDay && (
+        <span class="block text-lg">
+          <strong>День пам'яті:</strong> {saint.data.feastDay}
+        </span>
+      )}
+    </Fragment>
+  </Hero>
+
+  <!-- Короткий опис *************** -->
+  {saint.data.shortDescription && (
+    <div class="mx-auto max-w-3xl px-4 sm:px-6 py-8">
+      <div class="bg-blue-50 dark:bg-slate-800 rounded-lg p-6 md:p-8">
+        <p class="text-lg text-center italic">{saint.data.shortDescription}</p>
+      </div>
+    </div>
+  )}
+
+  <!-- Основний контент *************** -->
+  <div class="mx-auto max-w-3xl px-4 sm:px-6 py-8 md:py-12">
+    <div class="prose prose-lg dark:prose-invert max-w-none">
+      <Content />
+    </div>
+  </div>
+
+  <!-- Цитати *************** -->
+  {saint.data.quotes && saint.data.quotes.length > 0 && (
+    <div class="mx-auto max-w-3xl px-4 sm:px-6 pb-12 md:pb-16">
+      <h2 class="text-3xl font-bold mb-8 text-center">Цитати</h2>
+      <div class="space-y-6">
+        {saint.data.quotes.map((quote) => (
+          <div class="bg-slate-50 dark:bg-slate-800 rounded-lg p-6 md:p-8 border-l-4 border-accent">
+            <blockquote class="text-lg italic mb-4">
+              "{quote.text}"
+            </blockquote>
+            {quote.source && (
+              <cite class="text-sm text-slate-600 dark:text-slate-400 not-italic">
+                — {quote.source}
+              </cite>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  )}
+
+  <!-- Навігація *************** -->
+  <div class="mx-auto max-w-3xl px-4 sm:px-6 pb-12 md:pb-16">
+    <div class="flex justify-center">
+      <a
+        href="/saints"
+        class="btn btn-primary"
+      >
+        ← Повернутися до списку святих
+      </a>
+    </div>
+  </div>
+</Layout>
