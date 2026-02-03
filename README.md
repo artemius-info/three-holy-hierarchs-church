@@ -48,8 +48,8 @@ npm run dev
 
 ### Для дизайнерів
 
-📖 **Детальна інструкція:** [PINEGROW_GUIDE.md](./PINEGROW_GUIDE.md) (500+ рядків)
-⚡ **Швидкий старт:** [PINEGROW_QUICKSTART.md](./PINEGROW_QUICKSTART.md) (5 хвилин)
+📖 **Детальна інструкція:** [docs/pinegrow/guide.md](./docs/pinegrow/guide.md) (500+ рядків)
+⚡ **Швидкий старт:** [docs/pinegrow/quickstart.md](./docs/pinegrow/quickstart.md) (5 хвилин)
 
 ### Можливості
 
@@ -73,8 +73,8 @@ npm run dev
 
 Для доступу до Keystatic CMS на production через Teleport:
 
-📖 **Детальна інструкція:** [TELEPORT_KEYSTATIC_SETUP.md](./TELEPORT_KEYSTATIC_SETUP.md)
-⚡ **Швидкий старт:** [TELEPORT_QUICKSTART.md](./TELEPORT_QUICKSTART.md)
+📖 **Детальна інструкція:** [docs/teleport/setup.md](./docs/teleport/setup.md)
+⚡ **Швидкий старт:** [docs/teleport/quickstart.md](./docs/teleport/quickstart.md)
 
 ### Архітектура
 
