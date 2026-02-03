@@ -54,7 +54,7 @@ const saints = await getCollection('saints');
     items={saints.map((saint) => ({
       title: saint.data.name,
       description: saint.data.shortDescription || saint.data.title || '',
-      icon: 'tabler:user-star',
+      icon: 'tabler:star',
       callToAction: {
         text: 'Читати більше',
         href: `/saints/${saint.id}`,
