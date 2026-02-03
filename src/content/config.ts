@@ -48,7 +48,7 @@ const metadataDefinition = () =>
 
 // Новини/Блог
 const postsCollection = defineCollection({
-  loader: glob({ pattern: ['*.md', '*.mdx'], base: 'src/content/posts' }),
+  loader: glob({ pattern: ['*.md', '*.mdx', '*.mdoc'], base: 'src/content/posts' }),
   schema: z.object({
     title: z.string(),
     excerpt: z.string().optional(),
