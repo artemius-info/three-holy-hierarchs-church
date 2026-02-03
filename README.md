@@ -69,6 +69,39 @@ npm run dev
 
 **Важливо:** Не редагуйте frontmatter блоки (`---`) та динамічні змінні (`{props}`).
 
+## Keystatic CMS через Teleport (Production)
+
+Для доступу до Keystatic CMS на production через Teleport:
+
+📖 **Детальна інструкція:** [TELEPORT_KEYSTATIC_SETUP.md](./TELEPORT_KEYSTATIC_SETUP.md)
+⚡ **Швидкий старт:** [TELEPORT_QUICKSTART.md](./TELEPORT_QUICKSTART.md)
+
+### Архітектура
+
+```
+Користувач → Teleport → Офісний сервер → Keystatic (localhost:4321)
+                                              ↓
+                                          Git push
+                                              ↓
+                                           GitHub
+                                              ↓
+                                        Vercel (auto-deploy)
+```
+
+### Переваги
+
+- ✅ **Безпека** - доступ через Teleport
+- ✅ **Надійність** - Keystatic працює локально
+- ✅ **Автоматизація** - git push → Vercel deploy
+- ✅ **Контроль** - всі зміни в Git history
+
+### Швидкий старт
+
+1. Запустити Astro на сервері: `pm2 start npm --name keystatic -- run dev -- --host 0.0.0.0`
+2. Налаштувати Teleport App для `http://localhost:4321`
+3. Доступ через: `tsh app open keystatic-cms`
+4. Автопуш: cron кожні 10 хв → GitHub → Vercel
+
 ## Деплой на Vercel
 
 ### 1. Налаштування GitHub OAuth для Keystatic
