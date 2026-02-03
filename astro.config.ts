@@ -19,6 +19,7 @@ import react from '@astrojs/react';
 import markdoc from '@astrojs/markdoc';
 import keystatic from '@keystatic/astro';
 import vercel from '@astrojs/vercel';
+import pinegrow from '@pinegrow/astro-module';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -27,7 +28,7 @@ const whenExternalScripts = (items: (() => AstroIntegration) | (() => AstroInteg
   hasExternalScripts ? (Array.isArray(items) ? items.map((item) => item()) : [items()]) : [];
 
 export default defineConfig({
-  output: 'hybrid',
+  output: 'server',
   adapter: vercel(),
 
   i18n: {
@@ -36,6 +37,7 @@ export default defineConfig({
   },
 
   integrations: [
+    pinegrow(),
     react(),
     markdoc(),
     keystatic(),
