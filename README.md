@@ -4,11 +4,11 @@
 
 ## Технологічний стек
 
-- **Astro 5.x** - фреймворк для створення швидких веб-сайтів
+- **Astro 5.17+** - фреймворк для створення швидких веб-сайтів
 - **AstroWind** - шаблон для Astro
-- **Keystatic CMS** - система управління контентом
+- **Keystatic CMS** - система управління контентом (використовує Markdown)
 - **Tailwind CSS** - utility-first CSS фреймворк
-- **Vercel** - хостинг-платформа
+- **Vercel** - хостинг-платформа (serverless functions)
 
 ## Структура сайту
 
@@ -105,15 +105,19 @@ git push origin main
 
 ### Колекції контенту
 
-- **posts** - новини та оголошення
-- **events** - розклад богослужінь (одноразові та повторювані)
-- **sermons** - проповіді
-- **saints** - святі покровителі
+Всі файли зберігаються у форматі **Markdown (.md)**:
+
+- **posts** (`src/content/posts/`) - новини та оголошення
+- **events** (`src/content/events/`) - розклад богослужінь (одноразові та повторювані)
+- **sermons** (`src/content/sermons/`) - проповіді
+- **saints** (`src/content/saints/`) - святі покровителі (вже створено 3 файли)
 
 ### Singletons
 
-- **about** - сторінка "Про прихід"
-- **contacts** - контактна інформація
+- **about** (`src/content/about/`) - сторінка "Про прихід"
+- **contacts** (`src/content/contacts/`) - контактна інформація
+
+**Примітка**: Keystatic створює та редагує файли безпосередньо в репозиторії через GitHub API.
 
 ## Збірка для production
 
@@ -165,9 +169,55 @@ npm run check
 └── tailwind.config.js  # Конфігурація Tailwind CSS
 ```
 
+## Типові проблеми та рішення
+
+### Помилка з іконками (Icon not found)
+
+**Проблема**: `Unable to locate "tabler:..." icon!`
+
+**Рішення**: Використовуйте тільки базові іконки з Tabler Icons:
+- `tabler:book`, `tabler:heart`, `tabler:users`, `tabler:star`
+- `tabler:calendar`, `tabler:clock`, `tabler:map-pin`
+- `tabler:phone`, `tabler:mail`, `tabler:building`
+
+### Помилка 404 на динамічних сторінках
+
+**Проблема**: Сторінки `/saints/[slug]` не працюють
+
+**Рішення**: Переконайтеся, що додано `export const prerender = true;` на початку файлу
+
+### Помилка при збірці на Vercel
+
+**Проблема**: `Cannot find module 'entry.mjs'`
+
+**Рішення**:
+1. Перевірте, що використовуєте останню версію Astro (5.17+)
+2. Перевірте імпорт: `import vercel from '@astrojs/vercel'` (без `/serverless`)
+3. У `astro.config.ts` має бути `output: 'static'`
+
+### Keystatic не зберігає зміни
+
+**Проблема**: Зміни в Keystatic CMS не зберігаються в production
+
+**Рішення**:
+1. Перевірте змінні середовища у Vercel
+2. Переконайтеся, що GitHub App встановлено на репозиторій
+3. Перевірте права доступу (Contents: Read and write)
+
+### Контент не відображається
+
+**Проблема**: Колекція порожня або не завантажується
+
+**Рішення**:
+1. Перевірте, що файли мають розширення `.md` (не `.mdoc`)
+2. Видаліть кеш: `rm -rf .astro`
+3. Перезапустіть dev сервер
+
 ## Підтримка
 
 Для питань та пропозицій створюйте issue у GitHub репозиторії.
+
+**Live Site**: https://three-holy-hierarchs-church.vercel.app
 
 ## Ліцензія
 
