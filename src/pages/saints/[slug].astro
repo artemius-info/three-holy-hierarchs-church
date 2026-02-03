@@ -13,7 +13,19 @@ export const getStaticPaths = (async () => {
 }) satisfies GetStaticPaths;
 
 const { saint } = Astro.props;
-const { Content } = await saint.render();
+
+// For .mdoc files from Keystatic, we need to handle rendering differently
+let Content;
+let contentBody = '';
+
+try {
+  const rendered = await saint.render();
+  Content = rendered.Content;
+} catch (error) {
+  console.error('Error rendering saint content:', error);
+  // Fallback: use raw body if render fails
+  contentBody = saint.body || '';
+}
 
 const metadata = {
   title: saint.data.name,
@@ -50,7 +62,13 @@ const metadata = {
   <!-- Основний контент *************** -->
   <div class="mx-auto max-w-3xl px-4 sm:px-6 py-8 md:py-12">
     <div class="prose prose-lg dark:prose-invert max-w-none">
-      <Content />
+      {Content ? (
+        <Content />
+      ) : contentBody ? (
+        <div set:html={contentBody} />
+      ) : (
+        <p>Контент завантажується...</p>
+      )}
     </div>
   </div>
 

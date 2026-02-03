@@ -13,7 +13,18 @@ export const getStaticPaths = (async () => {
 }) satisfies GetStaticPaths;
 
 const { sermon } = Astro.props;
-const { Content } = await sermon.render();
+
+// For .mdoc files from Keystatic, we need to handle rendering differently
+let Content;
+let contentBody = '';
+
+try {
+  const rendered = await sermon.render();
+  Content = rendered.Content;
+} catch (error) {
+  console.error('Error rendering sermon content:', error);
+  contentBody = sermon.body || '';
+}
 
 const date = new Date(sermon.data.date);
 const formattedDate = date.toLocaleDateString('uk-UA', {
@@ -60,7 +71,13 @@ const metadata = {
   <!-- Основний контент *************** -->
   <div class="mx-auto max-w-3xl px-4 sm:px-6 py-8 md:py-12">
     <div class="prose prose-lg dark:prose-invert max-w-none">
-      <Content />
+      {Content ? (
+        <Content />
+      ) : contentBody ? (
+        <div set:html={contentBody} />
+      ) : (
+        <p>Контент завантажується...</p>
+      )}
     </div>
   </div>
 
