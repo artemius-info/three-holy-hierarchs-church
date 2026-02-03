@@ -48,7 +48,7 @@ const metadataDefinition = () =>
 
 // Новини/Блог
 const postsCollection = defineCollection({
-  loader: glob({ pattern: ['*.md', '*.mdx', '*.mdoc'], base: 'src/content/posts' }),
+  loader: glob({ pattern: ['*.md', '*.mdx'], base: 'src/content/posts' }),
   schema: z.object({
     title: z.string(),
     excerpt: z.string().optional(),
@@ -63,7 +63,7 @@ const postsCollection = defineCollection({
 
 // Розклад богослужінь
 const eventsCollection = defineCollection({
-  loader: glob({ pattern: ['*.md', '*.mdx', '*.mdoc'], base: 'src/content/events' }),
+  loader: glob({ pattern: ['*.md', '*.mdx'], base: 'src/content/events' }),
   schema: z.object({
     title: z.string(),
     eventType: z.enum([
@@ -97,7 +97,7 @@ const eventsCollection = defineCollection({
 
 // Проповіді
 const sermonsCollection = defineCollection({
-  loader: glob({ pattern: ['*.md', '*.mdx', '*.mdoc'], base: 'src/content/sermons' }),
+  loader: glob({ pattern: ['*.md', '*.mdx'], base: 'src/content/sermons' }),
   schema: z.object({
     title: z.string(),
     preacher: z.string().optional(),
@@ -111,7 +111,7 @@ const sermonsCollection = defineCollection({
 
 // Святі покровителі
 const saintsCollection = defineCollection({
-  loader: glob({ pattern: ['*.md', '*.mdx', '*.mdoc'], base: 'src/content/saints' }),
+  loader: glob({ pattern: ['*.md', '*.mdx'], base: 'src/content/saints' }),
   schema: z.object({
     name: z.string(),
     title: z.string().optional(),
@@ -130,7 +130,7 @@ const saintsCollection = defineCollection({
 
 // Про прихід (singleton)
 const aboutCollection = defineCollection({
-  loader: glob({ pattern: ['*.md', '*.mdx', '*.mdoc'], base: 'src/content/about' }),
+  loader: glob({ pattern: ['*.md', '*.mdx'], base: 'src/content/about' }),
   schema: z.object({
     title: z.string(),
     heroImage: z.string().optional(),
@@ -141,7 +141,7 @@ const aboutCollection = defineCollection({
 
 // Контакти (singleton)
 const contactsCollection = defineCollection({
-  loader: glob({ pattern: ['*.md', '*.mdx', '*.mdoc'], base: 'src/content/contacts' }),
+  loader: glob({ pattern: ['*.md', '*.mdx'], base: 'src/content/contacts' }),
   schema: z.object({
     title: z.string(),
     address: z.string().optional(),

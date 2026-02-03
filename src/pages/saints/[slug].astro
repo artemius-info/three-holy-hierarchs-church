@@ -14,6 +14,11 @@ export const getStaticPaths = (async () => {
 
 const { saint } = Astro.props;
 
+// Check if saint exists
+if (!saint) {
+  throw new Error('Saint not found');
+}
+
 // For .mdoc files from Keystatic, we need to handle rendering differently
 let Content;
 let contentBody = '';
@@ -25,18 +30,20 @@ try {
   hasContent = true;
 } catch (error) {
   console.error('Error rendering saint content:', error);
-  console.log('Saint object keys:', Object.keys(saint));
-  console.log('Saint data:', saint.data);
-  // Fallback: check if body exists
-  if (saint && typeof saint.body === 'string') {
-    contentBody = saint.body;
-    hasContent = true;
+  if (saint) {
+    console.log('Saint object keys:', Object.keys(saint));
+    console.log('Saint data:', saint?.data);
+    // Fallback: check if body exists
+    if (typeof saint.body === 'string') {
+      contentBody = saint.body;
+      hasContent = true;
+    }
   }
 }
 
 const metadata = {
-  title: saint.data.name,
-  description: saint.data.shortDescription,
+  title: saint?.data?.name || 'Святий',
+  description: saint?.data?.shortDescription || '',
 };
 ---
 

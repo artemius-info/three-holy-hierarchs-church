@@ -14,6 +14,11 @@ export const getStaticPaths = (async () => {
 
 const { sermon } = Astro.props;
 
+// Check if sermon exists
+if (!sermon) {
+  throw new Error('Sermon not found');
+}
+
 // For .mdoc files from Keystatic, we need to handle rendering differently
 let Content;
 let contentBody = '';
@@ -25,12 +30,14 @@ try {
   hasContent = true;
 } catch (error) {
   console.error('Error rendering sermon content:', error);
-  console.log('Sermon object keys:', Object.keys(sermon));
-  console.log('Sermon data:', sermon.data);
-  // Fallback: check if body exists
-  if (sermon && typeof sermon.body === 'string') {
-    contentBody = sermon.body;
-    hasContent = true;
+  if (sermon) {
+    console.log('Sermon object keys:', Object.keys(sermon));
+    console.log('Sermon data:', sermon?.data);
+    // Fallback: check if body exists
+    if (typeof sermon.body === 'string') {
+      contentBody = sermon.body;
+      hasContent = true;
+    }
   }
 }
 

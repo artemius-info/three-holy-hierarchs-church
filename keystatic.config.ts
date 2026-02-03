@@ -11,7 +11,7 @@ export default config({
       label: 'Новини',
       slugField: 'title',
       path: 'src/content/posts/*',
-      format: { contentField: 'content' },
+      format: { contentField: 'content', extension: 'md' },
       schema: {
         title: fields.slug({ name: { label: 'Заголовок' } }),
         excerpt: fields.text({
@@ -58,7 +58,7 @@ export default config({
       label: 'Розклад богослужінь',
       slugField: 'title',
       path: 'src/content/events/*',
-      format: { contentField: 'description' },
+      format: { contentField: 'description', extension: 'md' },
       schema: {
         title: fields.slug({ name: { label: 'Назва події' } }),
         eventType: fields.select({
@@ -120,7 +120,7 @@ export default config({
       label: 'Проповіді',
       slugField: 'title',
       path: 'src/content/sermons/*',
-      format: { contentField: 'content' },
+      format: { contentField: 'content', extension: 'md' },
       schema: {
         title: fields.slug({ name: { label: 'Заголовок проповіді' } }),
         preacher: fields.text({
@@ -154,7 +154,7 @@ export default config({
       label: 'Святі покровителі',
       slugField: 'name',
       path: 'src/content/saints/*',
-      format: { contentField: 'biography' },
+      format: { contentField: 'biography', extension: 'md' },
       schema: {
         name: fields.slug({ name: { label: "Ім'я святого" } }),
         title: fields.text({
@@ -193,7 +193,7 @@ export default config({
     about: singleton({
       label: 'Про прихід',
       path: 'src/content/about',
-      format: { contentField: 'content' },
+      format: { contentField: 'content', extension: 'md' },
       schema: {
         title: fields.text({ label: 'Заголовок' }),
         heroImage: fields.image({
@@ -214,7 +214,7 @@ export default config({
     contacts: singleton({
       label: 'Контакти',
       path: 'src/content/contacts',
-      format: { contentField: 'content' },
+      format: { contentField: 'content', extension: 'md' },
       schema: {
         title: fields.text({ label: 'Заголовок' }),
         address: fields.text({
